@@ -39,8 +39,10 @@ export default async function AppLayout({
         <div className="mx-auto flex max-w-5xl items-center justify-between px-4 sm:py-3 py-1">
           <Link href="/dashboard" className="flex items-center gap-1.5">
             <img src="/tabipla_icon_3.png" alt="" className="h-7 w-auto" />
-            <img src="/tabipla_text_2.png" alt="" className="h-7 w-auto dark:hidden" />
-            <img src="/tabipla_text_2_dark.png" alt="" className="h-7 w-auto hidden dark:block" />
+            {/* <img src="/tabipla_text_2.png" alt="" className="h-7 w-auto dark:hidden" />
+            <img src="/tabipla_text_2_dark.png" alt="" className="h-7 w-auto hidden dark:block" /> */}
+            <img src="/tabipla_logo.svg" alt="" className="h-6 w-auto mt-[3px] mb-0 dark:hidden" />
+            <img src="/tabipla_logo_dark.svg" alt="" className="h-6 w-auto mt-[3px] mb-0 hidden dark:block" />
           </Link>
           <div className="flex items-center gap-2 sm:gap-1">
             <NotificationBell />
