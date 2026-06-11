@@ -35,8 +35,8 @@ export default function SignUpPage() {
       <div className="w-full max-w-sm">
         <div className="mb-8 flex flex-col items-center gap-3">
           <img src="/tabipla_icon_3.png" alt="" className="h-14 w-auto" />
-          <img src="/tabipla_text_2.png" alt="tabipla" className="h-7 w-auto dark:hidden" />
-          <img src="/tabipla_text_2_dark.png" alt="tabipla" className="h-7 w-auto hidden dark:block" />
+          <img src="/tabipla_logo.svg" alt="tabipla" className="h-7 w-auto dark:hidden" />
+          <img src="/tabipla_logo_dark.svg" alt="tabipla" className="h-7 w-auto hidden dark:block" />
           <p className="text-sm text-gray-500 dark:text-gray-400">みんなで作る旅行プランナー</p>
         </div>
 

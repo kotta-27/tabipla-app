@@ -55,7 +55,7 @@ export function EmptyDashboard() {
 
   return (
     <div className="flex min-h-[60vh] flex-col items-center justify-center gap-12">
-      <p className="text-gray-400 dark:text-gray-600 text-sm">トリップを作成するか、招待コードで参加しましょう</p>
+      <p className="text-gray-400 dark:text-gray-300 text-sm">トリップを作成するか、招待コードで参加しましょう</p>
 
       <div className="flex items-center gap-10 sm:gap-16">
         {/* トリップを作成 */}
@@ -79,7 +79,7 @@ export function EmptyDashboard() {
           <div className="flex h-24 w-24 items-center justify-center rounded-full border-2 border-dashed border-gray-300 dark:border-gray-600 text-gray-400 dark:text-gray-500 group-hover:border-sky-400 group-hover:text-sky-500 group-hover:scale-105 transition-all duration-150">
             <LinkIcon size={30} strokeWidth={1.5} />
           </div>
-          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">招待URLで参加</span>
+          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">招待コードで参加</span>
         </button>
       </div>
 

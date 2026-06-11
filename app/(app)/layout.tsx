@@ -51,7 +51,7 @@ export default async function AppLayout({
                 {user?.image && <AvatarImage src={user.image} alt={user?.name ?? ""} />}
                 <AvatarFallback>{initials}</AvatarFallback>
               </Avatar>
-              <span className="text-sm text-gray-600 hidden sm:block">{user?.name ?? "アカウント"}</span>
+              <span className="text-sm text-gray-600 dark:text-gray-200 hidden sm:block">{user?.name ?? "アカウント"}</span>
             </Link>
           </div>
         </div>
