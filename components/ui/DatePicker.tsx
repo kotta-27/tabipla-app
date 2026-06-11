@@ -43,8 +43,11 @@ export function DatePicker({ value, onChange }: DatePickerProps) {
   const [dragStart, setDragStart] = useState<string | null>(null);
   const [dragCurrent, setDragCurrent] = useState<string | null>(null);
   const [dragMode, setDragMode] = useState<"select" | "deselect">("select");
+  const dragRef = useRef<{ start: string | null; current: string | null; mode: "select" | "deselect" }>({ start: null, current: null, mode: "select" });
   const gridRef = useRef<HTMLDivElement>(null);
   const touchCommittedRef = useRef(false);
+  const valueRef = useRef(value);
+  valueRef.current = value;
 
   const [hintVisible, setHintVisible] = useState(false);
   const [hintFading, setHintFading] = useState(false);
@@ -65,31 +68,31 @@ export function DatePicker({ value, onChange }: DatePickerProps) {
   const selectedSet = new Set(value);
   const rangeSet = dragStart && dragCurrent ? getDateRange(dragStart, dragCurrent) : new Set<string>();
 
-  const commitDrag = useCallback((fromTouch = false) => {
-    if (!dragStart || !dragCurrent) return;
-    const range = getDateRange(dragStart, dragCurrent);
+  const commitDrag = useCallback(() => {
+    const { start, current, mode } = dragRef.current;
+    if (!start || !current) return;
+    const range = getDateRange(start, current);
+    const val = valueRef.current;
     let next: string[];
-    if (dragMode === "select") {
-      const adding = [...range].filter((d) => !selectedSet.has(d));
-      next = [...value, ...adding].sort();
+    if (mode === "select") {
+      const selected = new Set(val);
+      const adding = [...range].filter((d) => !selected.has(d));
+      next = [...val, ...adding].sort();
     } else {
-      next = value.filter((d) => !range.has(d));
+      next = val.filter((d) => !range.has(d));
     }
     onChange(next);
+    dragRef.current = { start: null, current: null, mode: "select" };
     setDragStart(null);
     setDragCurrent(null);
     touchCommittedRef.current = true;
-  }, [dragStart, dragCurrent, dragMode, value, onChange, selectedSet]);
+  }, [onChange]);
 
   useEffect(() => {
     if (!dragStart) return;
     const up = () => commitDrag();
     window.addEventListener("mouseup", up);
-    window.addEventListener("touchend", up);
-    return () => {
-      window.removeEventListener("mouseup", up);
-      window.removeEventListener("touchend", up);
-    };
+    return () => window.removeEventListener("mouseup", up);
   }, [dragStart, commitDrag]);
 
   // タッチドラッグ: touchmove で elementFromPoint で日付セルを特定
@@ -100,7 +103,7 @@ export function DatePicker({ value, onChange }: DatePickerProps) {
       const touch = e.touches[0];
       const el = document.elementFromPoint(touch.clientX, touch.clientY);
       const dateStr = el?.closest("[data-date]")?.getAttribute("data-date");
-      if (dateStr) setDragCurrent(dateStr);
+      if (dateStr) { dragRef.current.current = dateStr; setDragCurrent(dateStr); }
     };
     const grid = gridRef.current;
     grid?.addEventListener("touchmove", handleTouchMove, { passive: false });
@@ -123,16 +126,20 @@ export function DatePicker({ value, onChange }: DatePickerProps) {
   };
 
   const handleMouseDown = (dateStr: string) => {
+    const mode = selectedSet.has(dateStr) ? "deselect" : "select";
+    dragRef.current = { start: dateStr, current: dateStr, mode };
     setDragStart(dateStr);
     setDragCurrent(dateStr);
-    setDragMode(selectedSet.has(dateStr) ? "deselect" : "select");
+    setDragMode(mode);
   };
 
   const handleTouchStart = (dateStr: string, e: React.TouchEvent) => {
     e.preventDefault();
+    const mode = selectedSet.has(dateStr) ? "deselect" : "select";
+    dragRef.current = { start: dateStr, current: dateStr, mode };
     setDragStart(dateStr);
     setDragCurrent(dateStr);
-    setDragMode(selectedSet.has(dateStr) ? "deselect" : "select");
+    setDragMode(mode);
   };
 
   const handleMouseEnter = (dateStr: string) => {
@@ -222,6 +229,19 @@ export function DatePicker({ value, onChange }: DatePickerProps) {
               onMouseDown={() => handleMouseDown(dateStr)}
               onMouseEnter={() => handleMouseEnter(dateStr)}
               onTouchStart={(e) => handleTouchStart(dateStr, e)}
+              onTouchEnd={(e) => {
+                const { start, current } = dragRef.current;
+                if (start === dateStr && current === dateStr) {
+                  e.preventDefault();
+                  toggle(dateStr);
+                  dragRef.current = { start: null, current: null, mode: "select" };
+                  setDragStart(null);
+                  setDragCurrent(null);
+                  touchCommittedRef.current = true;
+                } else {
+                  commitDrag();
+                }
+              }}
               onClick={() => handleClick(dateStr)}
             >
               {day}
