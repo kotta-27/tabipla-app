@@ -75,10 +75,12 @@ export default async function DashboardPage() {
         </div>
         <div className="flex items-center gap-2">
           {myTrips.length > 0 && <MobileTripActionFab />}
-          <div className="hidden sm:flex items-center gap-2">
-            <JoinByUrlDialog />
-            <CreateTripDialog />
-          </div>
+          {myTrips.length > 0 && (
+            <div className="hidden sm:flex items-center gap-2">
+              <JoinByUrlDialog />
+              <CreateTripDialog />
+            </div>
+          )}
         </div>
       </div>
 
