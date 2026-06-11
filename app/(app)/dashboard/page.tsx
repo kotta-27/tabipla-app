@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
-import { trips, tripMembers, users, activities } from "@/lib/schema";
+import { trips, tripMembers, users, activities, tripInvites } from "@/lib/schema";
 import { eq, inArray, min } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import CreateTripDialog from "@/components/trip/CreateTripDialog";
@@ -8,10 +8,54 @@ import { JoinByUrlDialog } from "@/components/trip/JoinByUrlDialog";
 import { TripTicketBoard } from "@/components/trip/TripTicketBoard";
 import { EmptyDashboard } from "@/components/trip/EmptyDashboard";
 import { MobileTripActionFab } from "@/components/trip/MobileTripActionFab";
+import { InviteJoinDialog } from "@/components/trip/InviteJoinDialog";
 
-export default async function DashboardPage() {
+export default async function DashboardPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ joinToken?: string }>;
+}) {
+  const { joinToken } = await searchParams;
   const session = await auth();
   if (!session) redirect("/login");
+
+  // 招待トークンがある場合は招待情報を取得
+  let pendingInvite: {
+    token: string;
+    tripId: string;
+    tripName: string;
+    tripEmoji: string;
+    tripDestination: string | null;
+    inviterName: string;
+    inviterImage: string | null;
+  } | null = null;
+  if (joinToken) {
+    const [inv] = await db
+      .select({
+        tripId: trips.id,
+        tripName: trips.name,
+        tripEmoji: trips.coverEmoji,
+        tripDestination: trips.destination,
+        inviterName: users.name,
+        inviterImage: users.image,
+      })
+      .from(tripInvites)
+      .innerJoin(trips, eq(trips.id, tripInvites.tripId))
+      .innerJoin(users, eq(users.id, tripInvites.createdBy))
+      .where(eq(tripInvites.token, joinToken))
+      .limit(1);
+    if (inv) {
+      pendingInvite = {
+        token: joinToken,
+        tripId: inv.tripId,
+        tripName: inv.tripName,
+        tripEmoji: inv.tripEmoji,
+        tripDestination: inv.tripDestination,
+        inviterName: inv.inviterName ?? "メンバー",
+        inviterImage: inv.inviterImage,
+      };
+    }
+  }
 
   const myTrips = await db
     .select({
@@ -63,6 +107,17 @@ export default async function DashboardPage() {
 
   return (
     <div className="space-y-4">
+      {pendingInvite && (
+        <InviteJoinDialog
+          token={pendingInvite.token}
+          tripId={pendingInvite.tripId}
+          tripName={pendingInvite.tripName}
+          tripEmoji={pendingInvite.tripEmoji}
+          tripDestination={pendingInvite.tripDestination}
+          inviterName={pendingInvite.inviterName}
+          inviterImage={pendingInvite.inviterImage}
+        />
+      )}
       {/* ヘッダー */}
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-baseline gap-2.5">

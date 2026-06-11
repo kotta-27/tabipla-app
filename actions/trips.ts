@@ -30,6 +30,79 @@ export async function createTrip(formData: FormData): Promise<{ tripId: string }
   return { tripId: trip.id };
 }
 
+export async function acceptInvite(token: string): Promise<{ tripId: string } | { error: string }> {
+  const user = await requireAuth();
+
+  const [invite] = await db
+    .select()
+    .from(tripInvites)
+    .where(eq(tripInvites.token, token))
+    .limit(1);
+
+  if (!invite) return { error: "無効な招待リンクです" };
+
+  const [existing] = await db
+    .select()
+    .from(tripMembers)
+    .where(and(eq(tripMembers.tripId, invite.tripId), eq(tripMembers.userId, user.id)))
+    .limit(1);
+
+  if (!existing) {
+    await db.insert(tripMembers).values({
+      tripId: invite.tripId,
+      userId: user.id,
+      role: "member",
+    });
+
+    // 既存メンバー全員に「参加しました」通知
+    const members = await db
+      .select({ userId: tripMembers.userId })
+      .from(tripMembers)
+      .where(and(eq(tripMembers.tripId, invite.tripId)));
+
+    const targets = members.filter((m) => m.userId !== user.id);
+    if (targets.length > 0) {
+      await db.insert(notifications).values(
+        targets.map((m) => ({
+          userId: m.userId,
+          type: "joined" as const,
+          tripId: invite.tripId,
+          fromUserId: user.id,
+          read: false,
+        }))
+      );
+    }
+  }
+
+  revalidatePath("/dashboard");
+  return { tripId: invite.tripId };
+}
+
+export async function declineInvite(token: string): Promise<{ ok: true } | { error: string }> {
+  const user = await requireAuth();
+
+  const [invite] = await db
+    .select()
+    .from(tripInvites)
+    .where(eq(tripInvites.token, token))
+    .limit(1);
+
+  if (!invite) return { error: "無効な招待リンクです" };
+
+  // 招待した人に「断りました」通知
+  if (invite.createdBy !== user.id) {
+    await db.insert(notifications).values({
+      userId: invite.createdBy,
+      type: "declined",
+      tripId: invite.tripId,
+      fromUserId: user.id,
+      read: false,
+    });
+  }
+
+  return { ok: true };
+}
+
 export async function joinTripByToken(token: string): Promise<{ tripId: string } | { error: string }> {
   const user = await requireAuth();
 

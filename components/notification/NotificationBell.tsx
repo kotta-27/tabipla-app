@@ -162,6 +162,11 @@ export function NotificationBell() {
                         <span className="font-medium">{n.tripEmoji} {n.tripName}</span>
                       )}{" "}から脱退しました
                     </p>
+                  ) : n.type === "declined" ? (
+                    <p className="text-sm">
+                      <span className="font-medium">{n.fromUserName ?? "ユーザー"}</span>{" "}さんが{" "}
+                      <span className="font-medium">{n.tripEmoji} {n.tripName}</span>{" "}への参加を断りました
+                    </p>
                   ) : (
                     <p className="text-sm">
                       <span className="font-medium">{n.fromUserName ?? "ユーザー"}</span>{" "}さんが{" "}

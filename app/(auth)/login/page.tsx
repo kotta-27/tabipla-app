@@ -14,6 +14,7 @@ import { Mail, Lock } from "lucide-react";
 function LoginForm() {
   const searchParams = useSearchParams();
   const error = searchParams.get("error");
+  const callbackUrl = searchParams.get("callbackUrl") ?? "/dashboard";
   const [pending, setPending] = useState(false);
   const [formError, setFormError] = useState("");
   const [email, setEmail] = useState("");
@@ -34,7 +35,7 @@ function LoginForm() {
       setFormError("メールアドレスまたはパスワードが正しくありません");
       setPending(false);
     } else {
-      window.location.href = "/dashboard";
+      window.location.href = callbackUrl;
     }
   };
 

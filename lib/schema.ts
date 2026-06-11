@@ -222,7 +222,7 @@ export const notifications = pgTable("notifications", {
   userId: text("user_id")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
-  type: text("type", { enum: ["trip_invite", "joined", "poll_answered", "poll_updated", "removed", "left", "poll_created"] }).notNull(),
+  type: text("type", { enum: ["trip_invite", "joined", "declined", "poll_answered", "poll_updated", "removed", "left", "poll_created"] }).notNull(),
   tripId: text("trip_id").references(() => trips.id, { onDelete: "cascade" }),
   fromUserId: text("from_user_id").references(() => users.id, { onDelete: "cascade" }),
   pollId: text("poll_id").references(() => polls.id, { onDelete: "cascade" }),

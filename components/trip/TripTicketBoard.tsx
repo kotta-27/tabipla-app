@@ -1,21 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { MapPin, ChevronLeft, ChevronRight } from "lucide-react";
-import { Avatar, AvatarImage, AvatarFallback, AvatarGroup, AvatarGroupCount } from "@/components/ui/avatar";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { TripNavLink } from "./TripNavLink";
+import { TripTicketCard } from "./TripTicketCard";
+import type { TripTicketMember } from "./TripTicketCard";
 
-const VARIANTS = [
-  { gradient: "from-sky-400 via-sky-500 to-blue-600" },
-  { gradient: "from-amber-400 via-orange-400 to-rose-500" },
-  { gradient: "from-teal-400 via-cyan-500 to-sky-600" },
-  { gradient: "from-rose-400 via-pink-500 to-fuchsia-600" },
-  { gradient: "from-indigo-400 via-violet-500 to-purple-600" },
-];
-
-function getVariant(id: string) {
-  return VARIANTS[(id.codePointAt(0) ?? 0) % VARIANTS.length];
-}
 function getRotation(id: string): number {
   const a = id.codePointAt(0) ?? 0;
   const b = id.codePointAt(1) ?? 0;
@@ -24,25 +14,6 @@ function getRotation(id: string): number {
 function getYPad(id: string): number {
   return ((id.codePointAt(2) ?? 0) % 4) * 6;
 }
-function getFlightCode(id: string): string {
-  const n = (((id.codePointAt(0) ?? 0) * 7 + (id.codePointAt(1) ?? 0)) % 900) + 100;
-  return `TP-${n}`;
-}
-
-/** Ticket stub: header height = perforation line Y */
-const NOTCH_Y = 96;
-
-const TICKET_MASK: React.CSSProperties = {
-  WebkitMaskImage: `radial-gradient(circle 9px at 0 ${NOTCH_Y}px, transparent 8.5px, #000 9.5px), radial-gradient(circle 9px at 100% ${NOTCH_Y}px, transparent 8.5px, #000 9.5px)`,
-  maskImage: `radial-gradient(circle 9px at 0 ${NOTCH_Y}px, transparent 8.5px, #000 9.5px), radial-gradient(circle 9px at 100% ${NOTCH_Y}px, transparent 8.5px, #000 9.5px)`,
-  WebkitMaskComposite: "source-in",
-  maskComposite: "intersect",
-};
-
-const BARCODE: React.CSSProperties = {
-  backgroundImage:
-    "repeating-linear-gradient(90deg, currentColor 0 1.5px, transparent 1.5px 3.5px), repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 6.5px)",
-};
 
 interface Trip {
   id: string;
@@ -178,9 +149,8 @@ export function TripTicketBoard({ trips, membersByTrip, tripDateMap }: Props) {
             const members = [...(membersByTrip[trip.id] ?? [])].sort(
               (a, b) => (a.role === "owner" ? -1 : b.role === "owner" ? 1 : 0)
             );
-            const variant = getVariant(trip.id);
-            const rot     = getRotation(trip.id);
-            const yPad    = getYPad(trip.id);
+            const rot  = getRotation(trip.id);
+            const yPad = getYPad(trip.id);
 
             return (
               <TripNavLink
@@ -198,82 +168,16 @@ export function TripTicketBoard({ trips, membersByTrip, tripDateMap }: Props) {
                   className="w-full transition-[translate,scale] duration-200 ease-out group-hover:-translate-y-1.5 group-hover:scale-[1.03] sm:w-[190px]"
                   style={{ rotate: `${rot}deg` }}
                 >
-                  {/* Boarding-pass ticket */}
-                  <div
-                    className="overflow-hidden rounded-xl bg-white shadow-[0_10px_24px_-8px_rgba(2,60,110,0.35),0_2px_6px_rgba(2,60,110,0.12)] transition-shadow duration-200 group-hover:shadow-[0_16px_32px_-8px_rgba(2,60,110,0.45),0_3px_8px_rgba(2,60,110,0.15)]"
-                    style={TICKET_MASK}
-                  >
-                    {/* Header pane */}
-                    <div
-                      className={`relative flex items-center justify-center overflow-hidden bg-gradient-to-br ${variant.gradient}`}
-                      style={{ height: NOTCH_Y }}
-                    >
-                      <div className="absolute -top-3 -right-3 h-16 w-16 rounded-full bg-white/10" />
-                      <div className="absolute -bottom-2 -left-2 h-12 w-12 rounded-full bg-white/10" />
-
-                      <div className="absolute top-2 left-2.5 right-2.5 flex items-center justify-between font-mono text-[7.5px] font-semibold tracking-[0.22em] text-white/75">
-                        <span>TABIPLA&nbsp;PASS</span>
-                        <span>{getFlightCode(trip.id)}</span>
-                      </div>
-
-                      <span className="z-10 select-none text-[46px] leading-none drop-shadow-md">
-                        {trip.coverEmoji}
-                      </span>
-
-                      {trip.role === "owner" && (
-                        <span className="absolute bottom-1.5 right-2 rotate-[6deg] rounded-[3px] border border-white/70 px-1 py-px font-mono text-[7px] font-bold tracking-[0.18em] text-white/90">
-                          OWNER
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Perforation */}
-                    <div className="border-t-2 border-dashed border-slate-300" />
-
-                    {/* Stub */}
-                    <div className="space-y-1.5 px-3 pb-2.5 pt-2">
-                      <p
-                        className="text-[13px] font-bold leading-snug text-slate-900"
-                        style={{
-                          display: "-webkit-box",
-                          WebkitLineClamp: 2,
-                          WebkitBoxOrient: "vertical",
-                          overflow: "hidden",
-                        }}
-                      >
-                        {trip.name}
-                      </p>
-
-                      {trip.destination && (
-                        <p className="flex items-center gap-0.5 text-[11px] text-slate-400">
-                          <MapPin size={9} className="shrink-0" />
-                          <span className="truncate">{trip.destination}</span>
-                        </p>
-                      )}
-
-                      <div className="flex items-center justify-between pt-0.5">
-                        <AvatarGroup>
-                          {members.slice(0, 3).map((m) => (
-                            <Avatar key={m.userId} size="sm" className={m.role === "owner" ? "!ring-sky-400" : ""}>
-                              {m.image && <AvatarImage src={m.image} alt={m.name ?? ""} />}
-                              <AvatarFallback>{(m.name ?? "?").charAt(0).toUpperCase()}</AvatarFallback>
-                            </Avatar>
-                          ))}
-                          {members.length > 3 && <AvatarGroupCount>+{members.length - 3}</AvatarGroupCount>}
-                        </AvatarGroup>
-                        <p className="font-mono text-[10px] font-semibold tabular-nums text-slate-500">
-                          {tripDateMap[trip.id]
-                            ? new Date(tripDateMap[trip.id] + "T00:00:00").toLocaleDateString("ja-JP", { month: "numeric", day: "numeric" }) + "〜"
-                            : "日程未定"}
-                        </p>
-                      </div>
-
-                      <div
-                        className="h-3 text-slate-800 opacity-70"
-                        style={BARCODE}
-                      />
-                    </div>
-                  </div>
+                  <TripTicketCard
+                    tripId={trip.id}
+                    tripName={trip.name}
+                    tripEmoji={trip.coverEmoji}
+                    tripDestination={trip.destination}
+                    members={members as TripTicketMember[]}
+                    startDate={tripDateMap[trip.id] ?? null}
+                    role={trip.role}
+                    className="transition-shadow duration-200 group-hover:shadow-[0_16px_32px_-8px_rgba(2,60,110,0.45),0_3px_8px_rgba(2,60,110,0.15)] !w-full sm:!w-[190px]"
+                  />
                 </div>
               </TripNavLink>
             );
