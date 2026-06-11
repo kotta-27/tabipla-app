@@ -32,10 +32,10 @@ function ShootingStars() {
 
     const fire = () => {
       const el = document.createElement("div");
-      const left = 5 + Math.random() * 75;   // 5〜80%
-      const top  = 2 + Math.random() * 22;    // 2〜24%
-      const len  = 120 + Math.random() * 80;  // 120〜200px
-      const dur  = 0.75 + Math.random() * 0.5; // 0.75〜1.25s
+      const left = 5 + Math.random() * 75;
+      const top  = 2 + Math.random() * 22;
+      const len  = 120 + Math.random() * 80;
+      const dur  = 0.75 + Math.random() * 0.5;
 
       Object.assign(el.style, {
         position: "absolute",
@@ -55,13 +55,22 @@ function ShootingStars() {
       container.appendChild(el);
       el.addEventListener("animationend", () => el.remove(), { once: true });
 
-      // 次の流れ星: 15〜40秒後
       timerId = setTimeout(fire, 15000 + Math.random() * 25000);
     };
 
-    // 最初は 5〜12秒後に開始
+    // 非表示中に溜まった流れ星を破棄
+    const clearStars = () => {
+      container.replaceChildren();
+    };
+    document.addEventListener("visibilitychange", clearStars);
+    window.addEventListener("focus", clearStars);
+
     timerId = setTimeout(fire, 5000 + Math.random() * 7000);
-    return () => clearTimeout(timerId);
+    return () => {
+      clearTimeout(timerId);
+      document.removeEventListener("visibilitychange", clearStars);
+      window.removeEventListener("focus", clearStars);
+    };
   }, []);
 
   return <div ref={containerRef} className="absolute inset-0" />;
@@ -74,6 +83,7 @@ export function StarField() {
     const t = setTimeout(() => setReady(true), 300);
     return () => clearTimeout(t);
   }, []);
+
 
   return (
     <div
