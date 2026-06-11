@@ -38,7 +38,7 @@ export default async function AppLayout({
       <header className="shrink-0 z-50 border-b border-sky-200/70 dark:border-sky-900/50 bg-white/95 dark:bg-[oklch(0.19_0.015_228)]/95 backdrop-blur-sm shadow-[0_1px_0_0_oklch(0.85_0.04_228/0.4)]">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-4 sm:py-3 py-1">
           <Link href="/dashboard" className="flex items-center gap-1.5">
-            <img src="/tabipla_icon_3.png" alt="" className="h-7 w-auto" />
+            <img src="/tabipla_icon_4.png" alt="" className="h-9 w-auto" />
             {/* <img src="/tabipla_text_2.png" alt="" className="h-7 w-auto dark:hidden" />
             <img src="/tabipla_text_2_dark.png" alt="" className="h-7 w-auto hidden dark:block" /> */}
             <img src="/tabipla_logo.svg" alt="" className="h-6 w-auto mt-[3px] mb-0 dark:hidden" />

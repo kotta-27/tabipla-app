@@ -29,6 +29,10 @@ const notoSansJP = Noto_Sans_JP({
 export const metadata: Metadata = {
   title: "tabipla - みんなで作る旅行プランナー",
   description: "日程調整・プラン作成・メモ・割り勘がひとつに",
+  icons: {
+    icon: "/favicon-64.png",
+    apple: "/favicon-64.png",
+  },
 };
 
 export const viewport: Viewport = {
