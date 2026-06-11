@@ -79,8 +79,8 @@ export function StarField() {
     <div
       aria-hidden
       className="pointer-events-none fixed inset-x-0 top-0 z-0 h-[60vh] overflow-hidden opacity-0 dark:opacity-100 transition-opacity duration-700"
-      style={ready ? undefined : { opacity: 0 }}
       style={{
+        opacity: ready ? undefined : 0,
         maskImage: "linear-gradient(to bottom, black 30%, transparent 100%)",
         WebkitMaskImage: "linear-gradient(to bottom, black 30%, transparent 100%)",
       }}
