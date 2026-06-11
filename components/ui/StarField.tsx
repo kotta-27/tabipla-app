@@ -71,16 +71,15 @@ export function StarField() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const t = setTimeout(() => setReady(true), 800);
+    const t = setTimeout(() => setReady(true), 300);
     return () => clearTimeout(t);
   }, []);
 
   return (
     <div
       aria-hidden
-      className="pointer-events-none fixed inset-x-0 top-0 z-0 h-[60vh] overflow-hidden opacity-0 dark:opacity-100 transition-opacity duration-700"
+      className="pointer-events-none fixed inset-x-0 top-0 z-0 h-[60vh] overflow-hidden opacity-0 dark:opacity-100"
       style={{
-        opacity: ready ? undefined : 0,
         maskImage: "linear-gradient(to bottom, black 30%, transparent 100%)",
         WebkitMaskImage: "linear-gradient(to bottom, black 30%, transparent 100%)",
       }}
@@ -88,14 +87,30 @@ export function StarField() {
       {GROUPS.map((shadows, i) => (
         <div
           key={i}
-          className="absolute"
-          style={{ top: 0, left: 0, width: 1, height: 1, borderRadius: "50%", boxShadow: shadows, animation: TWINKLE_ANIMS[i] }}
-        />
+          className="absolute inset-0"
+          style={{
+            opacity: ready ? 1 : 0,
+            transition: ready ? `opacity 2s ease ${i * 0.35}s` : "none",
+          }}
+        >
+          <div
+            className="absolute"
+            style={{ top: 0, left: 0, width: 1, height: 1, borderRadius: "50%", boxShadow: shadows, animation: ready ? TWINKLE_ANIMS[i] : "none" }}
+          />
+        </div>
       ))}
       <div
-        className="absolute"
-        style={{ top: 0, left: 0, width: 2, height: 2, borderRadius: "50%", boxShadow: BRIGHT, animation: "twinkle-bright 7s ease-in-out infinite" }}
-      />
+        className="absolute inset-0"
+        style={{
+          opacity: ready ? 1 : 0,
+          transition: ready ? "opacity 2s ease 1.5s" : "none",
+        }}
+      >
+        <div
+          className="absolute"
+          style={{ top: 0, left: 0, width: 2, height: 2, borderRadius: "50%", boxShadow: BRIGHT, animation: ready ? "twinkle-bright 7s ease-in-out infinite" : "none" }}
+        />
+      </div>
       <ShootingStars />
     </div>
   );
