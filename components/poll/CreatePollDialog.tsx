@@ -50,7 +50,7 @@ export function CreatePollDialog({ tripId }: { tripId: string }) {
       <DialogTrigger render={<AddButton label="日程を調整する" />} />
       <DialogContent className="max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>日程調整ポールを作成</DialogTitle>
+          <DialogTitle>日程調整を作成</DialogTitle>
         </DialogHeader>
         <form key={formKey} onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
