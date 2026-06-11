@@ -18,8 +18,8 @@ export function MemoEmptyState({ tripId }: { tripId: string }) {
       >
         <StickyNote size={36} className="text-gray-300 dark:text-gray-500 group-hover:text-sky-400 transition-colors duration-150" />
         <div className="text-center">
-          <p className="text-sm font-medium text-gray-400 dark:text-gray-400 group-hover:text-sky-500 transition-colors duration-150">まだメモがありません</p>
-          <p className="text-xs text-gray-300 dark:text-gray-500 mt-1">クリックして最初のメモを追加しましょう</p>
+          <p className="text-sm font-medium text-gray-400 dark:text-gray-300 group-hover:text-sky-500 transition-colors duration-150">まだメモがありません</p>
+          <p className="text-xs text-gray-300 dark:text-gray-400 mt-1">クリックして最初のメモを追加しましょう</p>
         </div>
       </div>
       <CreateMemoDialog tripId={tripId} open={open} onOpenChange={setOpen} />

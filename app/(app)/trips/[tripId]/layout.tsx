@@ -48,7 +48,7 @@ export default async function TripLayout({
             <MemberAvatarGroup members={members} />
           </div>
           {trip.destination && (
-            <p className="text-sm text-gray-500 mt-1 ml-1 flex items-center gap-1"><MapPin size={12} className="shrink-0" />{trip.destination}</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 ml-1 flex items-center gap-1"><MapPin size={12} className="shrink-0" />{trip.destination}</p>
           )}
         </div>
         <div className="hidden sm:block">

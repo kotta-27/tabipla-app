@@ -31,7 +31,7 @@ export function TripTabs({ tripId }: { tripId: string }) {
                 "relative flex items-center gap-1.5 px-5 py-2.5 text-sm font-medium whitespace-nowrap transition-colors",
                 isActive
                   ? "text-sky-600 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-sky-500"
-                  : "text-gray-500 hover:text-gray-800 hover:bg-gray-100/60 dark:hover:text-gray-200 dark:hover:bg-white/5",
+                  : "text-gray-500 dark:text-gray-400 hover:text-gray-800 hover:bg-gray-100/60 dark:hover:text-gray-200 dark:hover:bg-white/5",
               ].join(" ")}
             >
               <Icon size={15} />
@@ -54,7 +54,7 @@ export function TripTabs({ tripId }: { tripId: string }) {
                 href={href}
                 className={[
                   "flex flex-1 flex-col items-center gap-0.5 py-2 text-[10px] font-medium transition-colors",
-                  isActive ? "text-sky-600" : "text-gray-400",
+                  isActive ? "text-sky-600" : "text-gray-400 dark:text-gray-500",
                 ].join(" ")}
               >
                 <Icon size={20} strokeWidth={isActive ? 2.5 : 1.8} />

@@ -109,9 +109,9 @@ export function InviteButton({ tripId }: { tripId: string }) {
             <DialogTitle>招待コードで招待</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
-            <p className="text-sm text-gray-500">このコードをメンバーに共有してください</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">このコードをメンバーに共有してください</p>
             {urlLoading ? (
-              <div className="text-sm text-gray-400">コードを生成中...</div>
+              <div className="text-sm text-gray-400 dark:text-gray-500">コードを生成中...</div>
             ) : (
               <>
                 <div className="rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-4 py-4 text-center">
@@ -142,9 +142,9 @@ export function InviteButton({ tripId }: { tripId: string }) {
             <DialogTitle>ユーザを招待</DialogTitle>
           </DialogHeader>
           <div className="space-y-3">
-            <p className="text-sm text-gray-500">同じトリップに参加したことがあるメンバーを招待できます</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">同じトリップに参加したことがあるメンバーを招待できます</p>
             {usersLoading ? (
-              <div className="text-sm text-gray-400">読み込み中...</div>
+              <div className="text-sm text-gray-400 dark:text-gray-500">読み込み中...</div>
             ) : coTravelers.length === 0 ? (
               <div className="flex flex-col items-center py-8 text-center text-gray-400">
                 <Users size={32} className="mb-2" />

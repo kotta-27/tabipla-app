@@ -114,7 +114,7 @@ export function TripSettingsForm({
               <div className="space-y-2">
                 <Label htmlFor="name">トリップ名 *</Label>
                 <Input id="name" name="name" value={name} onChange={(e) => setName(e.target.value.slice(0, 20))} maxLength={20} required />
-                <p className="text-xs text-gray-400">20文字以内</p>
+                <p className="text-xs text-gray-400 dark:text-gray-500">20文字以内</p>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="destination">目的地</Label>
@@ -147,7 +147,7 @@ export function TripSettingsForm({
                   </Avatar>
                   <div>
                     <p className="text-sm font-medium">{m.name ?? "ユーザー"}</p>
-                    <p className="text-xs text-gray-400">{m.role === "owner" ? "オーナー" : "メンバー"}</p>
+                    <p className="text-xs text-gray-400 dark:text-gray-500">{m.role === "owner" ? "オーナー" : "メンバー"}</p>
                   </div>
                 </div>
                 {isOwner && m.userId !== currentUserId && (
@@ -177,7 +177,7 @@ export function TripSettingsForm({
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium">トリップを削除</p>
-                <p className="text-xs text-gray-400">すべてのデータが削除されます。取り消せません。</p>
+                <p className="text-xs text-gray-400 dark:text-gray-500">すべてのデータが削除されます。取り消せません。</p>
               </div>
               <Button
                 variant="outline"
@@ -192,7 +192,7 @@ export function TripSettingsForm({
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium">トリップから脱退</p>
-                <p className="text-xs text-gray-400">脱退後は再招待が必要です。</p>
+                <p className="text-xs text-gray-400 dark:text-gray-500">脱退後は再招待が必要です。</p>
               </div>
               <Button
                 variant="outline"
@@ -216,7 +216,7 @@ export function TripSettingsForm({
               {confirmDialog?.type === "removeMember" && `${confirmDialog.name ?? "このユーザー"}を削除しますか？`}
             </DialogTitle>
           </DialogHeader>
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
             {confirmDialog?.type === "delete" && "すべてのデータが削除されます。この操作は取り消せません。"}
             {confirmDialog?.type === "leave" && "脱退後は再招待が必要です。"}
             {confirmDialog?.type === "removeMember" && "このメンバーはトリップにアクセスできなくなります。"}

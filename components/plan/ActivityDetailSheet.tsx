@@ -58,7 +58,7 @@ export function ActivityDetailSheet({ item, tripId, linkedMemos, open, onOpenCha
       {/* 場所 */}
       {item.location && (
         <div className="flex items-start gap-2">
-          <MapPin size={14} className="shrink-0 mt-0.5 text-gray-400" />
+          <MapPin size={14} className="shrink-0 mt-0.5 text-gray-400 dark:text-gray-500" />
           <div className="min-w-0">
             <p className="text-sm text-gray-700 dark:text-gray-300 break-all">{item.location}</p>
             <a
@@ -84,7 +84,7 @@ export function ActivityDetailSheet({ item, tripId, linkedMemos, open, onOpenCha
       {/* 紐づいたメモ */}
       {linkedMemos.length > 0 && (
         <div className="space-y-1.5">
-          <p className="text-xs font-medium text-gray-400 uppercase tracking-wide">紐づけたメモ</p>
+          <p className="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wide">紐づけたメモ</p>
           <div className="flex flex-wrap gap-2">
             {linkedMemos.map((memo) => (
               <Link
@@ -97,7 +97,7 @@ export function ActivityDetailSheet({ item, tripId, linkedMemos, open, onOpenCha
                 <div className="min-w-0">
                   <p className="text-sm font-medium truncate">{memo.title}</p>
                   {memo.content && (
-                    <p className="text-xs text-gray-400 line-clamp-4 mt-0.5">{memo.content}</p>
+                    <p className="text-xs text-gray-400 dark:text-gray-500 line-clamp-4 mt-0.5">{memo.content}</p>
                   )}
                 </div>
               </Link>

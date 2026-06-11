@@ -104,7 +104,7 @@ export function PlanTimeline({
               <p className="text-xs text-sky-400 font-medium mb-1">
                 00:00 → {item.endTime?.slice(0, 5)}
               </p>
-              <p className="text-sm text-gray-500">{item.title}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{item.title}</p>
             </CardContent>
           </Card>
         ))}
@@ -154,7 +154,7 @@ export function PlanTimeline({
                       )}
                       <p className="font-medium text-sm">{item.title}</p>
                       {item.location && (
-                        <p className="text-xs text-gray-500 mt-0.5 flex items-center gap-1">
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 flex items-center gap-1">
                           <MapPin size={10} className="shrink-0" />
                           {item.location}
                         </p>
@@ -203,7 +203,7 @@ export function PlanTimeline({
                         <p className="text-xs text-sky-400 font-medium mb-1">
                           00:00 → {item.endTime.slice(0, 5)}
                         </p>
-                        <p className="text-sm text-gray-500">{item.title}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">{item.title}</p>
                       </CardContent>
                     </Card>
                   </>
@@ -283,7 +283,7 @@ export function PlanTimeline({
           <DialogHeader>
             <DialogTitle>このプランを削除しますか？</DialogTitle>
           </DialogHeader>
-          <p className="text-sm text-gray-500 mt-1">削除したプランは元に戻せません。</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">削除したプランは元に戻せません。</p>
           <div className="flex justify-end gap-2 mt-4">
             <Button variant="outline" size="sm" onClick={() => setDeletingId(null)}>
               キャンセル

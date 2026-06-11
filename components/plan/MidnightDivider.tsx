@@ -14,7 +14,7 @@ export function MidnightDivider({ date, dayIndex }: { date: string; dayIndex: nu
         <div className="flex items-center justify-center w-8 h-8 rounded-full bg-sky-600 text-white text-sm font-bold shrink-0">
           {dayIndex}
         </div>
-        <h3 className="font-semibold text-gray-800">{label}</h3>
+        <h3 className="font-semibold text-gray-800 dark:text-gray-100">{label}</h3>
       </div>
     </div>
   );

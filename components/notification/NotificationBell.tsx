@@ -102,20 +102,20 @@ export function NotificationBell() {
         <button
           type="button"
           onClick={() => setTab("unread")}
-          className={`flex-1 py-2 text-sm font-medium transition-colors ${tab === "unread" ? "border-b-2 border-sky-500 text-sky-600 dark:text-sky-400" : "text-gray-400 hover:text-gray-600"}`}
+          className={`flex-1 py-2 text-sm font-medium transition-colors ${tab === "unread" ? "border-b-2 border-sky-500 text-sky-600 dark:text-sky-400" : "text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300"}`}
         >
           未読 {unread.length > 0 && <span className="ml-1 text-xs bg-red-500 text-white rounded-full px-1.5">{unread.length}</span>}
         </button>
         <button
           type="button"
           onClick={() => setTab("read")}
-          className={`flex-1 py-2 text-sm font-medium transition-colors ${tab === "read" ? "border-b-2 border-sky-500 text-sky-600 dark:text-sky-400" : "text-gray-400 hover:text-gray-600"}`}
+          className={`flex-1 py-2 text-sm font-medium transition-colors ${tab === "read" ? "border-b-2 border-sky-500 text-sky-600 dark:text-sky-400" : "text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300"}`}
         >
           既読
         </button>
       </div>
       {listed.length === 0 ? (
-        <div className="px-4 py-10 text-center text-sm text-gray-400">{tab === "unread" ? "未読の通知はありません" : "既読の通知はありません"}</div>
+        <div className="px-4 py-10 text-center text-sm text-gray-400 dark:text-gray-500">{tab === "unread" ? "未読の通知はありません" : "既読の通知はありません"}</div>
       ) : (
         <ul className="divide-y overflow-y-auto flex-1">
           {listed.map((n) => (
@@ -177,12 +177,12 @@ export function NotificationBell() {
                       <Link
                         href={`/trips/${n.tripId}`}
                         onClick={() => setOpen(false)}
-                        className="text-xs text-gray-400 bg-gray-100 dark:bg-gray-800 rounded px-1.5 py-0.5 hover:text-sky-600 dark:hover:text-sky-400 hover:bg-sky-50 dark:hover:bg-sky-950/40 transition-colors"
+                        className="text-xs text-gray-400 dark:text-gray-500 bg-gray-100 dark:bg-gray-800 rounded px-1.5 py-0.5 hover:text-sky-600 dark:hover:text-sky-400 hover:bg-sky-50 dark:hover:bg-sky-950/40 transition-colors"
                       >
                         {n.tripEmoji} {n.tripName}
                       </Link>
                     )}
-                    <p className="text-xs text-gray-400">
+                    <p className="text-xs text-gray-400 dark:text-gray-500">
                       {new Date(n.createdAt).toLocaleDateString("ja-JP", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" })}
                     </p>
                   </div>
@@ -193,17 +193,17 @@ export function NotificationBell() {
                   {n.type === "trip_invite" ? (
                     <>
                       <Button size="sm" className="h-7 text-xs" onClick={() => handleAccept(n.id)} disabled={isPending}>参加する</Button>
-                      <Button size="sm" variant="ghost" className="h-7 text-xs text-gray-500" onClick={() => handleDismiss(n.id)} disabled={isPending}>無視する</Button>
+                      <Button size="sm" variant="ghost" className="h-7 text-xs text-gray-500 dark:text-gray-400" onClick={() => handleDismiss(n.id)} disabled={isPending}>無視する</Button>
                     </>
                   ) : n.type === "poll_created" && n.tripId ? (
                     <>
                       <Link href={`/trips/${n.tripId}/poll`} onClick={() => { setOpen(false); handleDismiss(n.id); }}>
                         <Button size="sm" className="h-7 text-xs" disabled={isPending}>回答する</Button>
                       </Link>
-                      <Button size="sm" variant="ghost" className="h-7 text-xs text-gray-500" onClick={() => handleDismiss(n.id)} disabled={isPending}>あとで</Button>
+                      <Button size="sm" variant="ghost" className="h-7 text-xs text-gray-500 dark:text-gray-400" onClick={() => handleDismiss(n.id)} disabled={isPending}>あとで</Button>
                     </>
                   ) : (
-                    <Button size="sm" variant="ghost" className="h-7 text-xs text-gray-500" onClick={() => handleDismiss(n.id)} disabled={isPending}>既読にする</Button>
+                    <Button size="sm" variant="ghost" className="h-7 text-xs text-gray-500 dark:text-gray-400" onClick={() => handleDismiss(n.id)} disabled={isPending}>既読にする</Button>
                   )}
                 </div>
               )}
@@ -267,7 +267,7 @@ export function NotificationBell() {
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="flex h-10 w-10 items-center justify-center rounded-full text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                className="flex h-10 w-10 items-center justify-center rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               >
                 <X size={20} />
               </button>

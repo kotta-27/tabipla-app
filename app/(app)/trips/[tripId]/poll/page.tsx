@@ -63,10 +63,10 @@ async function PollContent({ tripId }: { tripId: string }) {
         <UnansweredBanner count={unansweredPolls.length} firstPollId={unansweredPolls[0].id} />
       )}
       {pollsWithData.length === 0 ? (
-        <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-gray-200 py-12 text-center">
-          <CalendarClock size={40} className="mb-3 text-gray-300" />
-          <p className="text-gray-500 dark:text-gray-400">まだ日程調整がありません</p>
-          <p className="text-sm text-gray-400 dark:text-gray-500 mt-1">右上のボタンから日程を調整しましょう</p>
+        <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-gray-200 dark:border-gray-800 py-12 text-center">
+          <CalendarClock size={40} className="mb-3 text-gray-300 dark:text-gray-600" />
+          <p className="text-gray-500 dark:text-gray-300">まだ日程調整がありません</p>
+          <p className="text-sm text-gray-400 dark:text-gray-400 mt-1">右上のボタンから日程を調整しましょう</p>
         </div>
       ) : (
         <div className="space-y-6">

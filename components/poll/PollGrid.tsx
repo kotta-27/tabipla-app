@@ -165,14 +165,14 @@ export function PollGrid({ poll, members, currentUserId, tripId, isOwner }: Prop
           <div>
             <CardTitle className="text-base">{poll.title}</CardTitle>
             {poll.description && (
-              <p className="text-sm text-gray-500 mt-1">{poll.description}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{poll.description}</p>
             )}
           </div>
           <div className="flex items-center">
             {isOwner && (
               <DropdownMenu>
                 <DropdownMenuTrigger render={
-                  <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-gray-400 hover:text-gray-700" />
+                  <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300" />
                 }>
                   <MoreVertical size={16} />
                 </DropdownMenuTrigger>
@@ -210,7 +210,7 @@ export function PollGrid({ poll, members, currentUserId, tripId, isOwner }: Prop
               type="button"
               onClick={() => handleViewMode("by-person")}
               title="人 → 日付"
-              className={`px-2.5 py-1.5 transition-colors ${viewMode === "by-person" ? "bg-sky-50 text-sky-600" : "text-gray-400 hover:bg-gray-50"}`}
+              className={`px-2.5 py-1.5 transition-colors ${viewMode === "by-person" ? "bg-sky-50 text-sky-600" : "text-gray-400 dark:text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-800"}`}
             >
               <Columns3 size={15} />
             </button>
@@ -218,7 +218,7 @@ export function PollGrid({ poll, members, currentUserId, tripId, isOwner }: Prop
               type="button"
               onClick={() => handleViewMode("by-date")}
               title="日付 → 人"
-              className={`px-2.5 py-1.5 border-l transition-colors ${viewMode === "by-date" ? "bg-sky-50 text-sky-600" : "text-gray-400 hover:bg-gray-50"}`}
+              className={`px-2.5 py-1.5 border-l transition-colors ${viewMode === "by-date" ? "bg-sky-50 text-sky-600" : "text-gray-400 dark:text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-800"}`}
             >
               <AlignJustify size={15} />
             </button>
@@ -231,7 +231,7 @@ export function PollGrid({ poll, members, currentUserId, tripId, isOwner }: Prop
             <table className="w-full text-sm">
               <thead>
                 <tr>
-                  <th className="text-left py-2 pr-4 font-medium text-gray-400 text-xs min-w-[90px]">メンバー</th>
+                  <th className="text-left py-2 pr-4 font-medium text-gray-400 dark:text-gray-500 text-xs min-w-[90px]">メンバー</th>
                   {sortedDates.map((d) => {
                     const isBest = bestDateIds.has(d.id);
                     return (
@@ -250,7 +250,7 @@ export function PollGrid({ poll, members, currentUserId, tripId, isOwner }: Prop
                   const isMe = m.userId === currentUserId;
                   return (
                     <tr key={m.userId} className="border-t">
-                      <td className={`py-2 pr-4 text-sm ${isMe ? "font-semibold text-sky-600" : "text-gray-700"}`}>
+                      <td className={`py-2 pr-4 text-sm ${isMe ? "font-semibold text-sky-600" : "text-gray-700 dark:text-gray-200"}`}>
                         {m.name ?? "ユーザー"}
                       </td>
                       {sortedDates.map((d) => {
@@ -263,7 +263,7 @@ export function PollGrid({ poll, members, currentUserId, tripId, isOwner }: Prop
                                 {(() => { const Icon = BADGE_ICON[res]; return <Icon size={13} strokeWidth={2.5} />; })()}
                               </span>
                             ) : (
-                              <span className="text-gray-200 text-xs">—</span>
+                              <span className="text-gray-300 dark:text-gray-600 text-xs">—</span>
                             )}
                           </td>
                         );
@@ -277,7 +277,7 @@ export function PollGrid({ poll, members, currentUserId, tripId, isOwner }: Prop
             <table className="w-full text-sm">
               <thead>
                 <tr>
-                  <th className="text-left py-2 pr-4 font-medium text-gray-400 text-xs min-w-[90px]">日付</th>
+                  <th className="text-left py-2 pr-4 font-medium text-gray-400 dark:text-gray-500 text-xs min-w-[90px]">日付</th>
                   {members.map((m) => {
                     const isMe = m.userId === currentUserId;
                     return (
@@ -294,7 +294,7 @@ export function PollGrid({ poll, members, currentUserId, tripId, isOwner }: Prop
                   return (
                   <tr key={d.id} className={`border-t ${isBest ? "bg-green-50 dark:bg-green-950/40" : ""}`}>
                     <td className="py-2 pr-4 text-xs whitespace-nowrap">
-                      <div className={isBest ? "text-green-700 dark:text-green-300 font-semibold" : "text-gray-500"}>{formatDate(d.date)}</div>
+                      <div className={isBest ? "text-green-700 dark:text-green-300 font-semibold" : "text-gray-500 dark:text-gray-400"}>{formatDate(d.date)}</div>
                       <div className="flex items-center gap-0.5 text-green-600 dark:text-green-400 mt-0.5"><Circle size={9} strokeWidth={2.5} /> {getOkCount(d.id)}</div>
                     </td>
                     {members.map((m) => {
@@ -375,7 +375,7 @@ export function PollGrid({ poll, members, currentUserId, tripId, isOwner }: Prop
             <DialogHeader>
               <DialogTitle>ポールを削除しますか？</DialogTitle>
             </DialogHeader>
-            <p className="text-sm text-gray-500">この操作は取り消せません。</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">この操作は取り消せません。</p>
             <div className="flex gap-2 mt-2">
               <Button variant="outline" className="flex-1" onClick={() => setConfirmDelete(false)}>キャンセル</Button>
               <Button variant="destructive" className="flex-1" disabled={isPending} onClick={() => { setConfirmDelete(false); handleDelete(); }}>削除する</Button>
@@ -389,7 +389,7 @@ export function PollGrid({ poll, members, currentUserId, tripId, isOwner }: Prop
             <DialogHeader>
               <DialogTitle>変更が反映されません</DialogTitle>
             </DialogHeader>
-            <p className="text-sm text-gray-500">「完了」を押さずに閉じると、変更内容は保存されません。よろしいですか？</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">「完了」を押さずに閉じると、変更内容は保存されません。よろしいですか？</p>
             <div className="flex gap-2 mt-2">
               <Button variant="outline" className="flex-1" onClick={() => setConfirmClose(false)}>
                 戻る
