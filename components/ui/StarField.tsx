@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // 星を5グループに分割 → 各グループが別タイミングでキラキラ
 const GROUPS = [
@@ -68,10 +68,18 @@ function ShootingStars() {
 }
 
 export function StarField() {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setReady(true), 800);
+    return () => clearTimeout(t);
+  }, []);
+
   return (
     <div
       aria-hidden
       className="pointer-events-none fixed inset-x-0 top-0 z-0 h-[60vh] overflow-hidden opacity-0 dark:opacity-100 transition-opacity duration-700"
+      style={ready ? undefined : { opacity: 0 }}
       style={{
         maskImage: "linear-gradient(to bottom, black 30%, transparent 100%)",
         WebkitMaskImage: "linear-gradient(to bottom, black 30%, transparent 100%)",
