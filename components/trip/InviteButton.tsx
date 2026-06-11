@@ -89,15 +89,15 @@ export function InviteButton({ tripId }: { tripId: string }) {
         <DropdownMenuTrigger render={<Button variant="outline" size="sm" />}>
           <UserPlus size={15} />招待
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
+        <DropdownMenuContent align="end" className="w-[140px]">
           <DropdownMenuItem onClick={openUrlDialog}>
             <LinkIcon size={14} />
-            URLで招待
+            リンクで招待
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={openUserDialog}>
+          <DropdownMenuItem onClick={openUserDialog} >
             <Users size={14} />
-            ユーザを招待
+            知り合いを招待
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
