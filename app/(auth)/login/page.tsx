@@ -43,7 +43,7 @@ function LoginForm() {
     <div className="flex h-[100dvh] flex-col items-center justify-center bg-gradient-to-br from-sky-200 via-sky-50 to-cyan-100 dark:from-sky-900 dark:via-gray-950 dark:to-slate-900 px-4 overflow-hidden">
       <div className="w-full max-w-sm">
         <div className="mb-8 flex flex-col items-center gap-3">
-          <img src="/tabipla_icon_4.png" alt="" className="h-14 w-auto" />
+          <img src="/tabipla_icon_4_small.png" alt="" className="h-14 w-auto" />
           <img src="/tabipla_logo.svg" alt="tabipla" className="h-7 w-auto dark:hidden" />
           <img src="/tabipla_logo_dark.svg" alt="tabipla" className="h-7 w-auto hidden dark:block" />
           <p className="text-sm text-gray-500 dark:text-gray-400">みんなで作る旅行プランナー</p>
